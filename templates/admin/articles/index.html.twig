@@ -1,0 +1,108 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des articles{% endblock %}
+{% block page_title %}Gestion des articles{% endblock %}
+
+{% block content %}
+    <div class="mb-3">
+        <a href="{{ path('app_admin_article_new') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nouvel article
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Liste des articles</h5>
+            <div>
+                <span class="text-muted me-3">Total: {{ articles|length }}</span>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>Prix</th>
+                            <th>Stock</th>
+                            <th>Date création</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for article in articles %}
+                            <tr>
+                                <td>{{ article.id }}</td>
+                                <td>
+                                    <img src="{{ asset(article.image) }}" alt="{{ article.title }}" style="width: 50px; height: 50px; object-fit: cover;">
+                                </td>
+                                <td>{{ article.title }}</td>
+                                <td>{{ article.description|length > 50 ? article.description|slice(0, 50) ~ '...' : article.description }}</td>
+                                <td>{{ article.price }}€</td>
+                                <td>
+                                    {% if article.stock is null %}
+                                        <span class="badge bg-secondary">N/A</span>
+                                    {% elseif article.stock == 0 %}
+                                        <span class="badge bg-danger">Rupture</span>
+                                    {% elseif article.stock < 5 %}
+                                        <span class="badge bg-warning">{{ article.stock }}</span>
+                                    {% else %}
+                                        <span class="badge bg-success">{{ article.stock }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ article.createdAt|date('d/m/Y') }}</td>
+                                <td class="text-end">
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ path('app_admin_article_edit', {id: article.id}) }}"
+                                           class="btn btn-sm btn-warning"
+                                           title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-danger"
+                                                title="Supprimer"
+                                                onclick="confirmDelete({{ article.id }}, '{{ article.title }}')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="8" class="text-center text-muted py-4">
+                                    <i class="fas fa-shopping-bag fa-3x mb-3 d-block"></i>
+                                    Aucun article trouvé
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# Formulaire caché pour la suppression #}
+    <form id="delete-form" method="post" style="display: none;">
+        <input type="hidden" name="_token" id="delete-token">
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function confirmDelete(articleId, articleTitle) {
+        if (confirm(`Êtes-vous sûr de vouloir supprimer l'article "${articleTitle}" ?`)) {
+            const form = document.getElementById('delete-form');
+            form.action = `/admin/articles/${articleId}/delete`;
+
+            // Générer le token CSRF
+            const token = 'delete' + articleId;
+            document.getElementById('delete-token').value = token;
+
+            form.submit();
+        }
+    }
+</script>
+{% endblock %}

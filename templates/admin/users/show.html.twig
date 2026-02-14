@@ -1,0 +1,119 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Utilisateur #{{ user.id }}{% endblock %}
+{% block page_title %}Utilisateur #{{ user.id }}{% endblock %}
+
+{% block content %}
+    <div class="mb-3">
+        <a href="{{ path('app_admin_users') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+        <a href="{{ path('app_admin_user_edit', {id: user.id}) }}" class="btn btn-warning">
+            <i class="fas fa-edit"></i> Modifier
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Informations personnelles</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th style="width: 200px;">ID</th>
+                                <td>{{ user.id }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ user.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Prénom</th>
+                                <td>{{ user.firstname ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ user.lastname ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nom d'utilisateur</th>
+                                <td>{{ user.username ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Rôles</th>
+                                <td>
+                                    {% for role in user.roles %}
+                                        <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'secondary' }} me-1">
+                                            {{ role }}
+                                        </span>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {% if user.bio %}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Biographie</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0">{{ user.bio }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Avatar</h5>
+                </div>
+                <div class="card-body text-center">
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar }}" alt="Avatar de {{ user.email }}" class="img-fluid rounded-circle" style="max-width: 200px;">
+                    {% else %}
+                        <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 200px; height: 200px; font-size: 4rem;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <p class="text-muted mt-3">Aucun avatar</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Zone dangereuse</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">
+                        <small>La suppression de cet utilisateur est définitive et irréversible.</small>
+                    </p>
+                    <button type="button" class="btn btn-danger w-100" onclick="confirmDelete()">
+                        <i class="fas fa-trash"></i> Supprimer cet utilisateur
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Formulaire caché pour la suppression #}
+    <form id="delete-form" action="{{ path('app_admin_user_delete', {id: user.id}) }}" method="post" style="display: none;">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function confirmDelete() {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?\n\nCette action est irréversible !')) {
+            document.getElementById('delete-form').submit();
+        }
+    }
+</script>
+{% endblock %}

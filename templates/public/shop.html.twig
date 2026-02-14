@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Placeaupro - Shop{% endblock %}
+
+{% block body_class %}shop-page{% endblock %}
+
+{% block content %}
+    {# Hero Section #}
+    <section id="hero">
+        <img class="hero-shop" src="{{ asset('img/shop-hero.png') }}" alt="shop-hero">
+        <h2 class="hero-title-shop">ART NAME</h2>
+        <p class="hero-subtitle-shop">AND SHARE YOUR DESIGN</p>
+        <div class="hero-subsubtitle">
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+        </div>
+    </section>
+
+    {# Articles Section - Premier groupe #}
+    <section id="articles">
+        <div class="articles-content">
+            <div class="article-cards">
+                {% for article in articles_first_group|default([]) %}
+                    {% include 'components/_article_card.html.twig' with {article: article} %}
+                {% endfor %}
+            </div>
+            <div class="article-cards">
+                {% for article in articles_second_group|default([]) %}
+                    {% include 'components/_article_card.html.twig' with {article: article} %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {# Sub Hero Section #}
+    <section id="sub-hero">
+        <div class="sub-hero-container">
+            <div class="sub-hero-image">
+                <img src="{{ asset('img/shop-sub-hero.png') }}" alt="Sub Hero Image">
+            </div>
+            <div class="sub-hero-gap"></div>
+            <div class="sub-hero-text">
+                <h2 class="sub-hero-title">DESIGN NAME</h2>
+                <p class="sub-hero-subtitle">AND SHARE YOUR DESIGN</p>
+            </div>
+        </div>
+    </section>
+
+    {# Articles Section - Troisième groupe #}
+    <section id="articles">
+        <div class="articles-content">
+            <div class="article-cards">
+                {% for article in articles_third_group|default([]) %}
+                    {% include 'components/_article_card.html.twig' with {article: article} %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

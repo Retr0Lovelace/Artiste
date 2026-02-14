@@ -1,0 +1,118 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Modifier l'article #{{ article.id }}{% endblock %}
+{% block page_title %}Modifier l'article #{{ article.id }}{% endblock %}
+
+{% block content %}
+    <div class="mb-3">
+        <a href="{{ path('app_admin_articles') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Formulaire d'édition</h5>
+                </div>
+                <div class="card-body">
+                    {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="{{ form.title.vars.id }}" class="form-label">{{ form.title.vars.label }}</label>
+                                {{ form_widget(form.title) }}
+                                {{ form_errors(form.title) }}
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label for="{{ form.description.vars.id }}" class="form-label">{{ form.description.vars.label }}</label>
+                                {{ form_widget(form.description) }}
+                                {{ form_errors(form.description) }}
+                            </div>
+
+                            <div class="col-md-12 mb-3">
+                                <label for="{{ form.image.vars.id }}" class="form-label">{{ form.image.vars.label }}</label>
+                                {{ form_widget(form.image) }}
+                                {{ form_errors(form.image) }}
+                                <small class="form-text text-muted">Exemple: img/article1.png</small>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.price.vars.id }}" class="form-label">{{ form.price.vars.label }}</label>
+                                {{ form_widget(form.price) }}
+                                {{ form_errors(form.price) }}
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ form.stock.vars.id }}" class="form-label">{{ form.stock.vars.label }}</label>
+                                {{ form_widget(form.stock) }}
+                                {{ form_errors(form.stock) }}
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{ path('app_admin_articles') }}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Annuler
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Enregistrer les modifications
+                            </button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Aperçu</h5>
+                </div>
+                <div class="card-body text-center">
+                    {% if article.image %}
+                        <img src="{{ asset(article.image) }}" alt="{{ article.title }}" class="img-fluid rounded mb-3" style="max-height: 200px;">
+                    {% else %}
+                        <div class="bg-secondary text-white rounded d-inline-flex align-items-center justify-content-center" style="width: 200px; height: 200px; font-size: 4rem;">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    {% endif %}
+                    <p class="mb-1"><strong>{{ article.title }}</strong></p>
+                    <p class="text-muted mb-1">{{ article.price }}€</p>
+                    <p class="text-muted mb-0">
+                        <small>Créé le {{ article.createdAt|date('d/m/Y à H:i') }}</small>
+                    </p>
+                </div>
+            </div>
+
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Zone dangereuse</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-3">
+                        <small>La suppression de cet article est définitive et irréversible.</small>
+                    </p>
+                    <button type="button" class="btn btn-danger w-100" onclick="confirmDelete()">
+                        <i class="fas fa-trash"></i> Supprimer cet article
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Formulaire caché pour la suppression #}
+    <form id="delete-form" action="{{ path('app_admin_article_delete', {id: article.id}) }}" method="post" style="display: none;">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function confirmDelete() {
+        if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?\n\nCette action est irréversible !')) {
+            document.getElementById('delete-form').submit();
+        }
+    }
+</script>
+{% endblock %}

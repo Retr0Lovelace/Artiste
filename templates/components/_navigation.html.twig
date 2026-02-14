@@ -1,0 +1,45 @@
+{# 
+    Composant Navigation
+    
+    Variables disponibles:
+    - nav_style: 'default' | 'white' (pour les pages avec fond sombre)
+    - nav_transparent: true | false (pour la transparence du fond)
+    - current_page: nom de la page active pour highlighting
+#}
+
+{% set is_white = nav_style|default('default') == 'white' %}
+{% set bg_transparent = nav_transparent|default(false) %}
+
+<nav class="{{ is_white ? 'main-nav-w profile-nav' : 'main-nav' }}"
+     {% if bg_transparent %}style="background-color: transparent;"{% endif %}>
+    
+    {# Logo #}
+    <div class="{{ is_white ? 'logo-w' : 'logo' }}">
+        <a href="{{ path('app_home') }}">LOGO</a>
+    </div>
+    
+    {# Barre de recherche #}
+    <div class="{{ is_white ? 'nav-input-w' : 'nav-input' }}">
+        <div class="search">
+            <input type="text" 
+                   placeholder="Rechercher" 
+                   class="search-input"
+                   {% if bg_transparent %}style="background-color: transparent;"{% endif %}>
+        </div>
+    </div>
+    
+    {# Liens de navigation #}
+    <div class="{{ is_white ? 'nav-links-w' : 'nav-links' }}">
+        <a href="{{ path('app_shop') }}" {% if app.request.attributes.get('_route') == 'app_shop' %}class="active"{% endif %}>SHOP</a>
+        <a href="{{ path('app_galerie') }}" {% if app.request.attributes.get('_route') == 'app_galerie' %}class="active"{% endif %}>GALERIE</a>
+        <a href="{{ path('app_stories') }}" {% if app.request.attributes.get('_route') == 'app_stories' %}class="active"{% endif %}>STORIES</a>
+        <a href="#" id="cart-btn">PANIER</a>
+        
+        <div class="{{ is_white ? 'extra-nav-w' : 'extra-nav' }}">
+            <img src="{{ asset('img/bell-svgrepo-com.svg') }}" alt="Notification" class="bell-icon">
+            <a href="{{ path('app_profile') }}">
+                <div class="{{ is_white ? 'account-w profile-account' : 'account' }}"></div>
+            </a>
+        </div>
+    </div>
+</nav>

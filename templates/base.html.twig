@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Placeaupro{% endblock %}</title>
+    
+    {# Google Fonts #}
+    <link href="https://fonts.googleapis.com/css2?family=Julee&display=swap" rel="stylesheet">
+    
+    {# Font Awesome #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    {# Styles principaux #}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    
+    {# Styles responsives (optionnel par page) #}
+    {% block responsive_css %}
+        <link rel="stylesheet" href="{{ asset('css/responsiv.css') }}">
+    {% endblock %}
+    
+    {# Styles additionnels par page #}
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+    
+    {# ===== HEADER / NAVIGATION ===== #}
+    {% block header %}
+        <header class="{% block header_class %}achat-header{% endblock %}">
+            {% block navigation %}
+                {% include 'components/_navigation.html.twig' with {
+                    nav_style: block('nav_style') ?? 'default',
+                    nav_transparent: block('nav_transparent') ?? false
+                } %}
+            {% endblock %}
+        </header>
+    {% endblock %}
+    
+    {# ===== PANIER OVERLAY ===== #}
+    {% block cart %}
+        {% include 'components/_cart.html.twig' %}
+    {% endblock %}
+    
+    {# ===== CONTENU PRINCIPAL ===== #}
+    {% block body %}
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    {% endblock %}
+    
+    {# ===== FOOTER ===== #}
+    {% block footer %}
+        {% include 'components/_footer.html.twig' %}
+    {% endblock %}
+    
+    {# ===== SCRIPTS ===== #}
+    <script src="{{ asset('js/scripts.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

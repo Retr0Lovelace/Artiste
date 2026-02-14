@@ -1,0 +1,15 @@
+{#
+    Composant Article Card
+
+    Variables:
+    - article: objet article avec id, image, title, description, price
+    - show_link: boolean pour afficher le lien vers la page détail
+#}
+
+<div class="article-card">
+    <img src="{{ asset(article.image) }}" alt="{{ article.title }}">
+    <h4>{{ article.title|upper }}</h4>
+    <p>{{ article.description }}</p>
+
+    <a href="{{ path('app_article_show', {id: article.id}) }}">AJOUTER AU PANIER</a>
+</div>

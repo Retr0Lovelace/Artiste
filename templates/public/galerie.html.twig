@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Placeaupro - Galerie{% endblock %}
+
+{% block body_class %}galerie-page{% endblock %}
+
+{% block nav_transparent %}true{% endblock %}
+
+{% block content %}
+    <section class="categories">
+        {% set default_categories = ['Illustration', 'Photographie', 'Graphisme', 'Peinture', 'Digital Painting', 'Motion Design'] %}
+
+        {% for category in categories|default(default_categories) %}
+            <button class="category{% if loop.first %} active{% endif %}"
+                    data-category="{{ category|lower|replace({' ': '-'}) }}">
+                {{ category }}
+            </button>
+        {% endfor %}
+    </section>
+
+    <section class="galerie">
+        <div class="masonry">
+            {% for i in 1..20 %}
+                <div class="item"><img src="{{ asset('img/galerie-asset/img' ~ i ~ '.jpg') }}" alt="" /></div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

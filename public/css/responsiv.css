@@ -1,0 +1,657 @@
+/* =========================================== RESPONSIVE MOBILE =========================================== */
+
+@media screen and (max-width: 900px) {
+  /* ============================ NAVIGATION RESPONSIVE ============================ */
+
+  body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-family: inter, sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  padding-top: 60px !important;
+}
+  /* Navigation principale - Logo maison à gauche, recherche au centre, panier à droite */
+  .main-nav,
+  .main-nav-w {
+    padding: 15px 20px;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  /* Logo remplacé par icône maison */
+  .logo,
+  .logo-w {
+    min-width: 40px;
+  }
+
+  .logo a,
+  .logo-w a {
+    font-size: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+  }
+
+  .logo a::before,
+  .logo-w a::before {
+    content: "\f015"; /* Font Awesome home icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 18px;
+    color: #406f76;
+  }
+
+  .logo-w a::before {
+    color: #fff;
+  }
+
+  /* Barre de recherche prend plus d'espace */
+  .nav-input,
+  .nav-input-w {
+    flex: 1;
+    max-width: none;
+    margin: 0;
+  }
+
+  .nav-input input,
+  .nav-input-w input {
+    width: 90%;
+    padding: 8px 12px;
+    font-size: 7px;
+  }
+
+  /* Cacher les liens de navigation et les remplacer par un panier */
+  .nav-links,
+  .nav-links-w {
+    gap: 0;
+    min-width: 40px;
+  }
+
+  /* Cacher tous les liens sauf le panier */
+  .nav-links > a:not(#cart-btn),
+  .nav-links-w > a:not(#cart-btn) {
+    display: none !important;
+  }
+
+  .extra-nav,
+  .extra-nav-w {
+    display: none !important;
+  }
+
+  /* Panier visible et stylisé */
+  #cart-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    text-decoration: none;
+    position: relative;
+  }
+
+  #cart-btn::before {
+    content: "\f07a"; /* Font Awesome shopping cart icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 18px;
+    color: #406f76;
+  }
+
+  .nav-links-w #cart-btn::before {
+    color: #fff;
+  }
+
+  /* Navigation sticky en bas */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+    z-index: 100;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #406f76;
+    font-size: 9px;
+    gap: 4px;
+    flex: 1;
+    transition: color 0.3s;
+  }
+
+  .bottom-nav-item:hover {
+    color: #54a9b7;
+  }
+
+  .bottom-nav-item i {
+    font-size: 16px;
+  }
+
+  .bottom-nav-item.plus i {
+    font-size: 18px;
+  }
+
+  /* ============================ SHOP RESPONSIVE ============================ */
+
+  /* Produits en 2 par 2 */
+  .article-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 40px;
+  }
+
+  /* Hero shop image centré et sans espace en haut */
+  #hero {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .hero-shop {
+    width: 90%;
+    height: 90%;
+    border-radius: 5px;
+    filter: grayscale(100%);
+    display: block;
+    margin: 0 auto;
+  }
+
+  .hero-title-shop {
+    position: absolute;
+    top: 40px;
+    left: 30px;
+    line-height: 86%;
+    font-family: Julee;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 61px;
+    line-height: 86%;
+    letter-spacing: 0%;
+    color: #54a9b7;
+    font-family: "Julee", cursive;
+    max-width: 100px;
+    line-height: 86%;
+    color: #54a9b7;
+    margin: 0;
+  }
+
+  .hero-subtitle-shop {
+    position: absolute;
+    top: 150px;
+    left: 30px;
+    font-family: Inter, sans-serif;
+    font-size: 8px;
+    color: #54aab7;
+    margin: 0;
+    text-align: left;
+  }
+
+  .hero-subsubtitle {
+    font-family: inter, sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 7px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #406f76;
+  }
+
+  .article-card {
+    flex: none;
+    max-width: none;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .article-card h4 {
+    margin-top: 10px;
+    color: #406f76;
+    font-family: inter, sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 8px;
+    line-height: 100%;
+    letter-spacing: 0%;
+  }
+
+  .article-card p {
+    margin-top: -5.5px;
+    color: #406f76;
+    font-family: inter, sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 6px;
+    line-height: 100%;
+    letter-spacing: 0%;
+  }
+
+  .article-card a {
+    font-weight: 400;
+    text-decoration: none;
+    margin-top: 3px;
+    padding: 2px 12px;
+    background-color: #406f76;
+    font-size: 7px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 31px;
+    text-align: center;
+  }
+
+  /* Sub hero proportionné */
+  .sub-hero-container {
+    flex-direction: column;
+  }
+
+  .sub-hero-image,
+  .sub-hero-gap,
+  .sub-hero-text {
+    flex: 1 1 100%;
+  }
+
+  .sub-hero-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 0px;
+  }
+
+  .sub-hero-title {
+    font-size: 58.56px;
+    padding: 10px;
+  }
+
+  .sub-hero-text {
+    text-align: left;
+    padding: 10px;
+    border-radius: 0px;
+  }
+
+  .sub-hero-subtitle {
+    font-size: 8px;
+    padding: 20px;
+    margin-top: -40px;
+  }
+
+  /* ============================ PAGE ACHAT RESPONSIVE ============================ */
+
+  .article-container {
+    flex-direction: column;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  .article-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+  }
+
+  .article-image img {
+    width: 100%;
+    aspect-ratio: 4 / 5; /* légèrement plus haute qu'un carré */
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .article-content {
+    width: 100%;
+    margin-top: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  /* Description plus bas */
+  .article-description {
+    margin-bottom: 20px;
+    order: 2;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 16px 16px 16px;
+  }
+
+  /* Bouton ajouter au panier sous l'œuvre (avant la description) */
+  .article-btn {
+    order: 1;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 100%;
+    font-size: 12px;
+    height: 40px;
+  }
+
+  /* Réduire les grands espaces entre la section achat et la biographie artiste */
+  #article {
+    padding-bottom: 40px;
+  }
+
+  #artiste-banner {
+    margin: 40px 0;
+  }
+
+  /* Textes plus petits pour s'adapter au mobile sur la page achat */
+  .article-title {
+    font-size: 16px;
+  }
+
+  .article-text {
+    font-size: 13px;
+    line-height: 160%;
+  }
+
+  .article-text.small {
+    font-size: 12px;
+  }
+
+  .article-subtitle {
+    font-size: 14px;
+  }
+
+  /* ============================ BLOC BIOGRAPHIE ARTISTE (SECTION ARTISTE-BANNER) ============================ */
+
+  .artiste-banner-container {
+    flex-direction: column;
+    height: auto;
+    width: 100%;
+  }
+
+  .artiste-banner-image {
+    flex: 0 0 auto;
+  }
+
+  .artiste-banner-image img {
+    width: 100%;
+    max-height: 260px;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .artiste-banner-text {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 24px 20px;
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  .artiste-banner-title {
+    font-size: 16px;
+  }
+
+  .artiste-banner-center p {
+    font-size: 13px;
+    line-height: 170%;
+  }
+
+  .artiste-banner-bottom-title {
+    font-size: 15px;
+  }
+
+  /* ============================ GALERIE RESPONSIVE ============================ */
+
+  /* Images en 2 par 2 */
+  .masonry {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  /* ============================ STORIES RESPONSIVE ============================ */
+
+  .squares-wrapper {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 300px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .square-center {
+    width: 200px;
+    height: 200px;
+  }
+
+  .square-left-1,
+  .square-right-1 {
+    width: 150px;
+    height: 150px;
+  }
+
+  .square-left-2,
+  .square-right-2 {
+    width: 120px;
+    height: 120px;
+  }
+
+  .square-left-1 {
+    transform: translateX(-40px);
+  }
+
+  .square-left-2 {
+    transform: translateX(-80px);
+  }
+
+  .square-right-1 {
+    transform: translateX(40px);
+  }
+
+  .square-right-2 {
+    transform: translateX(80px);
+  }
+
+  /* ============================ PROFIL RESPONSIVE ============================ */
+
+  /* Cards en 2 par 2 */
+  .profile-board-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-left: 16px;
+    width: calc(100% - 32px);
+    box-sizing: border-box;
+  }
+
+  .profile-board-card {
+    width: 100%;
+    height: 150px;
+    max-width: none;
+    font-size: 18px;
+    box-sizing: border-box;
+    border: 0.5px solid #d4d4d4;
+    border-radius: 8px;
+  }
+
+  .profile-sections,
+  .section-divider,
+  .profile-actions {
+    margin-left: 16px;
+    width: calc(100% - 32px);
+  }
+
+  .profile-sections {
+    margin-top: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .section-btn {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .profile-name {
+    font-size: 21px;
+    margin-bottom: 20px;
+  }
+
+  .profile-banner {
+    height:180px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .profile-pic {
+    width: 120px;
+    height: 120px;
+  }
+
+.btn-edit-profile {
+  background: rgba(255, 255, 255, 0);
+  color: #002730;
+  font-family: "Inter", sans-serif;
+  font-weight: 100;
+  border: solid 1px #bdbdbd;
+  padding: 12px 21px;
+  border-radius: 65px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-more {
+  border: solid 1px #bdbdbd;
+  background: transparent;
+  color: #c0c0c0;
+  border-radius: 150%;
+  padding: 12px 16px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+  .section-divider {
+    width: 88%;
+    margin-top: 24px;
+    margin-bottom: 40px;
+  }
+
+.profile-board-card.create-first {
+  font-size: 12px;
+}
+
+  /* ============================ LOGIN RESPONSIVE ============================ */
+
+  .login-main {
+    min-height: auto;
+    padding-top: 80px;
+    align-items: flex-start;
+  }
+
+  .login-container {
+    max-width: 100%;
+    margin: 30px 16px 20px;
+  }
+
+  .login-form {
+    gap: 28px;
+  }
+
+  .login-input {
+    height: 42px;
+    font-size: 14px;
+  }
+
+  .login-button {
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .login-actions {
+    margin-top: 12px;
+  }
+
+  /* ============================ HOME PAGE RESPONSIVE ============================ */
+
+  body.home-page #hero .hero-content {
+    padding-top: 200px;
+    padding-left: 4vw;
+  }
+
+  body.home-page #hero .hero-content h1 {
+    font-size: 100px;
+  }
+
+  body.home-page #hero .hero-content p {
+    font-size: 14px;
+    max-width: 90%;
+  }
+
+  body.home-page #windows {
+    margin-top: 50px;
+  }
+
+  body.home-page #windows .windows-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  body.home-page #windows .window-card {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  /* =========================================== NAVIGATION BOTTOM STICKY =========================================== */
+
+  /* Le nav bottom sera ajouté via HTML, mais on le style ici */
+ 
+
+  @media screen and (max-width: 900px) {
+    .bottom-nav {
+      display: flex;
+    }
+
+    /* Espace en bas pour éviter que le contenu soit caché */
+    body {
+      padding-bottom: 80px;
+    }
+
+    body.home-page {
+      padding-bottom: 80px;
+    }
+
+    body.achat-page,
+    body.galerie-page,
+    body.profile-page {
+      padding-bottom: 80px;
+    }
+
+    /* Footer avec espace supplémentaire */
+    footer {
+      display: none;  
+    }
+  }
+}

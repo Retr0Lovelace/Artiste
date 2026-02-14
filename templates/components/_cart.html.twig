@@ -1,0 +1,45 @@
+{# 
+    Composant Panier (Cart)
+    Overlay et panneau latéral du panier
+#}
+
+{# Overlay sombre #}
+<div id="cart-overlay"></div>
+
+{# Panneau du panier #}
+<div id="cart-panel">
+    <div class="cart-header">
+        <span>VOTRE PANIER</span>
+        <button id="close-cart">✕</button>
+    </div>
+
+    <div class="cart-content">
+        {# Contenu quand le panier est vide #}
+        {% if cart is not defined or cart.items|default([])|length == 0 %}
+            <div class="cart-empty">
+                <img src="{{ asset('img/cart-icon.png') }}" alt="Panier vide">
+                <p>Votre panier est vide</p>
+                <a href="{{ path('app_shop') }}" class="cart-btn">EXPLORER NOS PRODUITS</a>
+            </div>
+        {% else %}
+            {# Contenu quand le panier a des articles #}
+            <div class="cart-items">
+                {% for item in cart.items %}
+                    <div class="cart-item">
+                        <img src="{{ asset(item.image) }}" alt="{{ item.name }}">
+                        <div class="cart-item-info">
+                            <h4>{{ item.name }}</h4>
+                            <p>{{ item.price|number_format(2, ',', ' ') }} €</p>
+                        </div>
+                        <button class="remove-item" data-id="{{ item.id }}">✕</button>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="cart-total">
+                <span>Total:</span>
+                <span>{{ cart.total|number_format(2, ',', ' ') }} €</span>
+            </div>
+            <a href="{{ path('app_checkout') }}" class="cart-btn">COMMANDER</a>
+        {% endif %}
+    </div>
+</div>

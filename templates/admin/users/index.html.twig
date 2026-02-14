@@ -1,0 +1,99 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Gestion des utilisateurs{% endblock %}
+{% block page_title %}Gestion des utilisateurs{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Liste des utilisateurs</h5>
+            <div>
+                <span class="text-muted me-3">Total: {{ users|length }}</span>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Nom d'utilisateur</th>
+                            <th>Rôles</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.firstname ?? '-' }}</td>
+                                <td>{{ user.lastname ?? '-' }}</td>
+                                <td>{{ user.username ?? '-' }}</td>
+                                <td>
+                                    {% for role in user.roles %}
+                                        <span class="badge bg-{{ role == 'ROLE_ADMIN' ? 'danger' : 'secondary' }} me-1">
+                                            {{ role }}
+                                        </span>
+                                    {% endfor %}
+                                </td>
+                                <td class="text-end">
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ path('app_admin_user_show', {id: user.id}) }}"
+                                           class="btn btn-sm btn-info"
+                                           title="Voir les détails">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ path('app_admin_user_edit', {id: user.id}) }}"
+                                           class="btn btn-sm btn-warning"
+                                           title="Modifier">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button"
+                                                class="btn btn-sm btn-danger"
+                                                title="Supprimer"
+                                                onclick="confirmDelete({{ user.id }}, '{{ user.email }}')">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-4">
+                                    <i class="fas fa-users fa-3x mb-3 d-block"></i>
+                                    Aucun utilisateur trouvé
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# Formulaire caché pour la suppression #}
+    <form id="delete-form" method="post" style="display: none;">
+        <input type="hidden" name="_token" id="delete-token">
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function confirmDelete(userId, userEmail) {
+        if (confirm(`Êtes-vous sûr de vouloir supprimer l'utilisateur "${userEmail}" ?`)) {
+            const form = document.getElementById('delete-form');
+            form.action = `/admin/users/${userId}/delete`;
+
+            // Générer le token CSRF
+            const token = 'delete' + userId;
+            document.getElementById('delete-token').value = token;
+
+            form.submit();
+        }
+    }
+</script>
+{% endblock %}

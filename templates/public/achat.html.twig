@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Placeaupro - {{ article.title|default('Achat') }}{% endblock %}
+
+{% block body_class %}achat-page{% endblock %}
+
+{% block nav_transparent %}true{% endblock %}
+
+{% block content %}
+    <section id="article">
+        <div class="article-container">
+            <!-- IMAGE -->
+            <div class="article-image">
+                <img src="{{ asset(article.image|default('img/article.jpg')) }}" alt="{{ article.title|default('Oeuvre') }}" />
+
+                <div class="article-image-index">
+                    {% for i in 1..5 %}
+                        <span class="{% if loop.first %}active{% endif %}">{{ '%02d'|format(i) }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- TEXTE -->
+            <div class="article-content">
+                <div class="article-description">
+                    <h2 class="article-title">{{ article.title|default("NOM DE L'ŒUVRE")|upper }}</h2>
+
+                    <p class="article-text">
+                        {{ article.description|default("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.") }}
+                    </p>
+
+                    <p class="article-text small">
+                        {{ article.subtitle|default("the industry's standard dummy text ever since the 1500s.") }}
+                    </p>
+
+                    <hr />
+
+                    <h3 class="article-subtitle">
+                        INFOS SUR L’ARTISTE
+
+                        <p class="article-text small">
+                            {{ article.artist_info|default("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text") }}
+                        </p>
+                    </h3>
+                </div>
+
+                <button class="article-btn" data-article-id="{{ article.id|default(1) }}">
+                    AJOUTER AU PANIER
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="artiste-banner">
+        <div class="artiste-banner-container">
+            <div class="artiste-banner-image">
+                <img src="{{ asset(artist.image|default('img/artiste.jpg')) }}" alt="Image de l'artiste" />
+                <span class="artiste-banner-image-label">PHOTO DE L’ARTISTE</span>
+            </div>
+            <div class="artiste-banner-text">
+                <div class="artiste-banner-top">
+                    <p class="artiste-banner-title">BIOGRAPHIE</p>
+                </div>
+                <div class="artiste-banner-center">
+                    <p>
+                        {{ artist.biography|default("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.")|nl2br }}
+                    </p>
+                </div>
+                <div class="artiste-banner-bottom">
+                    <div class="artiste-banner-bottom-title">CONTACT</div>
+                    <div class="artiste-banner-contact">
+                        <div>{{ artist.social|default('@Loremipsum') }}</div>
+                        <div>{{ artist.email|default("Mail de l'artiste") }}</div>
+                        <div>{{ artist.phone|default('Numéro de téléphone') }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="articles">
+        <div class="articles-content">
+            <div class="article-cards">
+                {% for related in related_articles|default([]) %}
+                    {% include 'components/_article_card.html.twig' with {article: related, show_link: false} %}
+                {% else %}
+                    {% for i in 8..11 %}
+                        <div class="article-card">
+                            <img src="{{ asset('img/image' ~ i ~ '.png') }}" alt="Article {{ i + 1 }}">
+                            <h4>LOREM IPSUM</h4>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+                            <a href="#" class="article-add-to-cart">AJOUTER AU PANIER</a>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
